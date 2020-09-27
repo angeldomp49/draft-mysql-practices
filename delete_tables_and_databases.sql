@@ -1,0 +1,7 @@
+USE zoologic;
+
+DROP TABLE IF EXISTS habitat_weather;
+DROP TABLE IF EXISTS weathers;
+DROP TABLE IF EXISTS habitats;
+DROP TABLE IF EXISTS animals;
+DROP DATABASE IF EXISTS zoologic;
