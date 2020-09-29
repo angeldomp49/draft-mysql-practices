@@ -124,15 +124,5 @@ INSERT INTO animals VALUES(null,
     (SELECT id FROM kinds    WHERE name = 'turtle'),
  'jordan', 'm', '2005-10-29',5, 'description cat');
 
-INSERT INTO animal_foods VALUES(
-    (SELECT id FROM animals WHERE name = 'dory'),
-    (SELECT id FROM foods WHERE name = 'seafood')
-);
-INSERT INTO animal_foods VALUES(
-    (SELECT id FROM animals WHERE name = 'dory'),
-    (SELECT id FROM foods WHERE name = 'fruit')
-);
-INSERT INTO animal_foods VALUES(
-    (SELECT id FROM animals WHERE name = 'dory'),
-    (SELECT id FROM foods WHERE name = 'fish')
-);
+
+-- for insert data in animal_food see the fill.php file--
