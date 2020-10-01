@@ -18,6 +18,7 @@ if(isset($_POST['meat'])){
     );
     
 }
+
 if(isset($_POST['corn'])){
     $bdd->exec(
         'INSERT INTO animal_food VALUES(
@@ -26,6 +27,7 @@ if(isset($_POST['corn'])){
         );'
     );
 }
+
 if(isset($_POST['seafood'])){
     $bdd->exec(
         'INSERT INTO animal_food VALUES(
@@ -34,6 +36,7 @@ if(isset($_POST['seafood'])){
         );'
     );
 }
+
 if(isset($_POST['fruit'])){
     $bdd->exec(
         'INSERT INTO animal_food VALUES(
@@ -42,6 +45,7 @@ if(isset($_POST['fruit'])){
         );'
     );
 }
+
 if(isset($_POST['fish'])){
     $bdd->exec(
         'INSERT INTO animal_food VALUES(
@@ -50,5 +54,3 @@ if(isset($_POST['fish'])){
         );'
     );
 }
-
-echo 'all right';
