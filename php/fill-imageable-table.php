@@ -8,6 +8,7 @@
 </head>
 <body>
     <form action="upload-image.php" method="post" enctype="multipart/form-data">
+        <input type="text" id="name_imageable" name="name_imageable">
         <select name="type" id="type">
             <option value="1">animal</option>
             <option value="2">weather</option>
