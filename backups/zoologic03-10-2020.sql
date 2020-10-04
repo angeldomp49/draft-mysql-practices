@@ -21,6 +21,81 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `zoologic`
 --
+CREATE DATABASE IF NOT EXISTS zoologic;
+use zoologic;
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `weathers`
+--
+
+DROP TABLE IF EXISTS `weathers`;
+CREATE TABLE IF NOT EXISTS `weathers` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `weathers`
+--
+
+INSERT INTO `weathers` (`id`, `name`, `description`) VALUES
+(1, 'rainy', 'clima lluvioso'),
+(2, 'sunny', 'clima soleado'),
+(3, 'chilly', 'clima frio'),
+(4, 'humid', 'clima humedo'),
+(5, 'dry', 'clima seco');
+
+--
+-- Structure de la table `habitats`
+--
+
+DROP TABLE IF EXISTS `habitats`;
+CREATE TABLE IF NOT EXISTS `habitats` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `weather_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `area` decimal(5,5) DEFAULT NULL,
+  `inhabitats` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_weather` (`weather_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `habitats`
+--
+
+INSERT INTO `habitats` (`id`, `weather_id`, `name`, `area`, `inhabitats`) VALUES
+(1, 2, 'chicken house', '0.99999', 10),
+(2, 5, 'home', '0.99999', 10),
+(3, 4, 'tank', '0.99999', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `kinds`
+--
+
+DROP TABLE IF EXISTS `kinds`;
+CREATE TABLE IF NOT EXISTS `kinds` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `latin_name` varchar(100) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `kinds`
+--
+
+INSERT INTO `kinds` (`id`, `name`, `latin_name`, `description`) VALUES
+(1, 'cat', 'Felis silvestris catus', 'gato domestico'),
+(2, 'dog', 'Canis lupus familiaris', 'perro domestico'),
+(3, 'turtle', 'Testudinata', 'tortuga domestica'),
+(4, 'chicken', 'Gallus gallus domesticus', 'gallina domestica');
 
 -- --------------------------------------------------------
 
@@ -68,6 +143,31 @@ INSERT INTO `animals` (`id`, `habitat_id`, `kind_id`, `name`, `sex`, `birthday`,
 (18, 1, 4, 'susana', 'f', '2007-10-29', 6, 'description cat'),
 (19, 3, 3, 'dominique', 'm', '2004-10-29', 3, 'description cat'),
 (20, 3, 3, 'jordan', 'm', '2005-10-29', 5, 'description cat');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `foods`
+--
+
+DROP TABLE IF EXISTS `foods`;
+CREATE TABLE IF NOT EXISTS `foods` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `foods`
+--
+
+INSERT INTO `foods` (`id`, `name`, `description`) VALUES
+(1, 'meat', 'like cown or pork'),
+(2, 'corn', 'like tortillas or corncob'),
+(3, 'seafood', 'like shrimp'),
+(4, 'fruit', 'like pear and apple'),
+(5, 'fish', 'like tuna fish');
 
 -- --------------------------------------------------------
 
@@ -143,57 +243,6 @@ INSERT INTO `animal_food` (`animal_id`, `food_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `foods`
---
-
-DROP TABLE IF EXISTS `foods`;
-CREATE TABLE IF NOT EXISTS `foods` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `foods`
---
-
-INSERT INTO `foods` (`id`, `name`, `description`) VALUES
-(1, 'meat', 'like cown or pork'),
-(2, 'corn', 'like tortillas or corncob'),
-(3, 'seafood', 'like shrimp'),
-(4, 'fruit', 'like pear and apple'),
-(5, 'fish', 'like tuna fish');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `habitats`
---
-
-DROP TABLE IF EXISTS `habitats`;
-CREATE TABLE IF NOT EXISTS `habitats` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `weather_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `area` decimal(5,5) DEFAULT NULL,
-  `inhabitats` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_weather` (`weather_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `habitats`
---
-
-INSERT INTO `habitats` (`id`, `weather_id`, `name`, `area`, `inhabitats`) VALUES
-(1, 2, 'chicken house', '0.99999', 10),
-(2, 5, 'home', '0.99999', 10),
-(3, 4, 'tank', '0.99999', 10);
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `imageable`
 --
 
@@ -210,54 +259,6 @@ CREATE TABLE IF NOT EXISTS `imageable` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `kinds`
---
-
-DROP TABLE IF EXISTS `kinds`;
-CREATE TABLE IF NOT EXISTS `kinds` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `latin_name` varchar(100) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `kinds`
---
-
-INSERT INTO `kinds` (`id`, `name`, `latin_name`, `description`) VALUES
-(1, 'cat', 'Felis silvestris catus', 'gato domestico'),
-(2, 'dog', 'Canis lupus familiaris', 'perro domestico'),
-(3, 'turtle', 'Testudinata', 'tortuga domestica'),
-(4, 'chicken', 'Gallus gallus domesticus', 'gallina domestica');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `weathers`
---
-
-DROP TABLE IF EXISTS `weathers`;
-CREATE TABLE IF NOT EXISTS `weathers` (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `weathers`
---
-
-INSERT INTO `weathers` (`id`, `name`, `description`) VALUES
-(1, 'rainy', 'clima lluvioso'),
-(2, 'sunny', 'clima soleado'),
-(3, 'chilly', 'clima frio'),
-(4, 'humid', 'clima humedo'),
-(5, 'dry', 'clima seco');
 
 --
 -- Contraintes pour les tables déchargées
