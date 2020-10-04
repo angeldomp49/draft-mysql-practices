@@ -7,18 +7,19 @@ $name_imageable = $_POST['name_imageable'];
 $image = $_FILES['image_imageable'];
 $name_img = $image['name'];
 $mime_img = $image['type'];
-$data_img = $image['tmp_name'];
 $size_img = $image['size'];
 try {
     $bdd = new PDO('mysql:host=localhost:3308;dbname=zoologic;charset=utf8;','root','');
 
 } catch (Exception $e) {
-    echo 'error';
     $e->getMessage();
 }
 
+ob_start();
 
-
+readfile($image['tmp_name']);
+$data_img = base64_encode(ob_get_contents());
+ob_end_clean();
 
 if($type == $ANIMAL_TYPE){
     $bdd->exec(
@@ -37,9 +38,4 @@ else if($type == $WEATHER_TYPE){
 else{
     echo "error";
 }
-
-echo "INSERT INTO imageable VALUES(null, '{$name_img}', '{$mime_img}', {$size_img}, '{$data_img}',
-(SELECT id FROM animals WHERE name = '{$name_imageable}'),
-'animal');";
-
-
+header("Location: fill-imageable-table.php");
