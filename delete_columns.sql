@@ -1,6 +1,6 @@
 USE zoologic;
 
-DELETE FROM animals;
+DELETE FROM animals; --all items--
 
 DELETE FROM animals
-    WHERE name='cat';
+    WHERE name='cat'; --selected items--
