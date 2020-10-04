@@ -1,11 +1,14 @@
 <?php
-$ANIMAL_TYPE = 1;
-$WEATHER_TYPE = 2;
+$ANIMAL_TYPE = "1";
+$WEATHER_TYPE = "2";
 
-$image = base64_encode($_POST['img']);
 $type  = $_POST['type'];
 $name_imageable = $_POST['name_imageable'];
-
+$image = $_FILES['image_imageable'];
+$name_img = $image['name'];
+$mime_img = $image['type'];
+$data_img = $image['tmp_name'];
+$size_img = $image['size'];
 try {
     $bdd = new PDO('mysql:host=localhost:3308;dbname=zoologic;charset=utf8;','root','');
 
@@ -14,14 +17,29 @@ try {
     $e->getMessage();
 }
 
+
+
+
 if($type == $ANIMAL_TYPE){
-    $bdd->exec('INSERT INTO imageable VALUES(null, \''.$image.'\',
-    (SELECT id FROM animals WHERE name = \''.$name_imageable.'\' LIMITS 1)
-    ,\'animal\');');
+    $bdd->exec(
+        "INSERT INTO imageable VALUES(null, '{$name_img}', '{$mime_img}', {$size_img}, '{$data_img}',
+            (SELECT id FROM animals WHERE name = '{$name_imageable}'),
+        'animal');"
+        );
 }
 else if($type == $WEATHER_TYPE){
-    $bdd->exec('INSERT INTO imageable VALUES(null, \''.$image.'\',
-    (SELECT id FROM wheathers WHERE name = \''.$name_imageable.'\' LIMITS 1)
-    ,\'wheather\');');
+    $bdd->exec(
+        "INSERT INTO imageable VALUES(null, '{$name_img}', '{$mime_img}', {$size_img}, '{$data_img}',
+            (SELECT id FROM weathers WHERE name = '{$name_imageable}'),
+        'wheather');"
+        );
 }
+else{
+    echo "error";
+}
+
+echo "INSERT INTO imageable VALUES(null, '{$name_img}', '{$mime_img}', {$size_img}, '{$data_img}',
+(SELECT id FROM animals WHERE name = '{$name_imageable}'),
+'animal');";
+
 

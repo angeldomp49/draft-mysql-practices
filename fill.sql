@@ -126,3 +126,5 @@ INSERT INTO animals VALUES(null,
 
 
 -- for insert data in animal_food see the fill.php file--
+
+-- for insert data in imageable table see fill-imageable-table.php--
