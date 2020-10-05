@@ -1,5 +1,5 @@
 USE zoologic;
 
-SELECT kinds.description FROM kinds 
-    INNER JOIN animals ON kinds.id = animals.kind_id
-    WHERE animals.name = 'cat';
+SELECT animals.name FROM animals
+    INNER JOIN kinds ON animals.kind_id = kinds.id
+    WHERE kinds.name = 'cat';
