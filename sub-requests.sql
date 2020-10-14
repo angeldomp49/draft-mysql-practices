@@ -11,55 +11,69 @@ SELECT animals.id FROM animals
     );
 --this is an instruction who is not possible with a join--
 SELECT * FROM animals
-    WHERE ROW (animals.kind_id) =(
+    WHERE animals.kind_id =(
         SELECT id FROM kinds 
         WHERE name = "cat"
     );
 --first get the kinds.id for "cat", then select all from animals with animals.kind_id = id--
 
 SELECT * FROM animals
-    WHERE ROW (animals.kind_id) IN (
+    WHERE animals.kind_id IN (
         SELECT id FROM kinds
         WHERE name IN ("cat", "dog")
     );
 --the same result but with severals id in return--
 
 SELECT * FROM animals
-    WHERE ROW (animals.kind_id) NOT IN (
+    WHERE animals.kind_id NOT IN (
         SELECT id FROM kinds
         WHERE name IN ("cat", "dog")
     );
 --in inverse result, all from animals where the name of their kinds is not "cat" and "dog"--
 
-SELECT imageable.name FROM imageable
-WHERE imageable.imageable_id = (
-    SELECT animals.id FROM animals
-    WHERE animals.name = "dory"
-) AND 
-WHERE imageable.imageable_type = "animals";
+SELECT img.name FROM (
+    SELECT imageable.imageable_id, imageable.name FROM imageable
+        WHERE imageable.imageable_type ="animal"
+    ) AS img
+    WHERE img.imageable_id = (
+        SELECT animals.id FROM animals
+        WHERE animals.name = "dory"
+);
 --similar to before--
+SELECT animals.name, animals.age, img_data.name, img_data.imageable_id FROM animals 
+    INNER JOIN (
+        SELECT img_table.name, img_table.imageable_id FROM (
+            SELECT imageable.imageable_type, imageable.name, imageable.imageable_id FROM imageable 
+                WHERE imageable.imageable_type = "animal"
+            ) AS img_table
+            WHERE img_table.imageable_id IN (
+                SELECT animals.id FROM animals
+                    WHERE animals.age < ANY(
+                        SELECT kinds.id FROM kinds 
+                            WHERE kinds.name IN ("shark", "chicken")
+                        )
+                )
+    ) AS img_data ON animals.id = img_data.imageable_id;
+--first we create a table who contains only imageable of type ="animal", over this we collect--
+--all the imageable animals that are an id less than 5 or 4 because the kind.id for shark = 5 and--
+--for chicken = 4, then we use this results for get the imageable.name, imageable.id--
+--finally we have a simple join--
 
-SELECT imageable.name FROM imageable 
-    WHERE imageable.imageable_id IN (
-        SELECT animals.id FROM animals 
-        WHERE age < ANY(
-            SELECT kinds.id FROM kinds
-            WHERE kinds.name IN ("shark", "chicken")
-        ) 
-    ) AND
-    WHERE imageable.imageable_type = "animals";
---the imagable name for the animals who have an age less than the id of sharck or the id of chicken--
-
-SELECT imageable.name FROM imageable 
-    WHERE imageable.imageable_id IN (
-        SELECT animals.id FROM animals 
-        WHERE age < ALL(
-            SELECT kinds.id FROM kinds
-            WHERE kinds.name IN ("shark", "chicken")
-        ) 
-    ) AND
-    WHERE imageable.imageable_type = "animals";
---less than the id of shark and chicken--
+SELECT animals.name, animals.age, img_data.name, img_data.imageable_id FROM animals 
+    INNER JOIN (
+        SELECT img_table.name, img_table.imageable_id FROM (
+            SELECT imageable.imageable_type, imageable.name, imageable.imageable_id FROM imageable 
+                WHERE imageable.imageable_type = "animal"
+            ) AS img_table
+            WHERE img_table.imageable_id IN (
+                SELECT animals.id FROM animals
+                    WHERE animals.age < ALL(
+                        SELECT kinds.id FROM kinds 
+                            WHERE kinds.name IN ("shark", "chicken")
+                        )
+                )
+    ) AS img_data ON animals.id = img_data.imageable_id;
+--similar but we use ALL instead of ANY--
 --!important ANY, SOME or ALL are available only for sub-requests IN and NOT IN for al requests and sub-requests-- 
 
 SELECT animals.id FROM animals
@@ -77,4 +91,6 @@ WHERE EXISTS (SELECT * FROM animals WHERE name = "mauricio" );
 
 SELECT * FROM kinds
 WHERE NOT EXISTS (SELECT * FROM animals WHERE animals.kind_id = kinds.id);
---pending coments--
+--the "NOT EXISTS" statement have the same behavior of ! operator in programming languages--
+--it invert the result of an operation, in this code we obtain all kinds who not have animals--
+--the result is then the row shark--
