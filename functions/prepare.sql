@@ -59,3 +59,29 @@ END |
 
 CALL hasta(11);
 SELECT * FROM resultados;
+
+
+CREATE VIEW OR REPLACE todo_de_todas AS
+SELECT fecha, hora, nombre, email, telefono, mensaje FROM bolsa_de_trabajo
+UNION 
+SELECT fecha, hora, nombre, email, telefono, mensaje FROM cotiza_ahora
+UNION 
+SELECT fecha, hora, nombre, email, telefono, mensaje FROM danos_tu_opinion
+UNION 
+SELECT fecha, hora, nombre, email, telefono, mensaje FROM eventos_sociales
+UNION 
+SELECT fecha, hora, nombre, email, telefono, mensaje FROM fiestas_corporativas
+UNION 
+SELECT fecha, hora, nombre, email, telefono, mensaje FROM fiestas_para_adultos
+UNION 
+SELECT fecha, hora, nombre, email, telefono, mensaje FROM fiestas_infantiles;
+
+
+CREATE VIEW OR REPLACE todo_eventos AS 
+SELECT fecha, hora, nombre, email, telefono, mensaje, como_te_enteraste, fecha_del_evento, hora_de_inicio, hora_de_fin FROM eventos_sociales
+UNION
+SELECT fecha, hora, nombre, email, telefono, mensaje, como_te_enteraste, fecha_del_evento, hora_de_inicio, hora_de_fin FROM fiestas_corporativas
+UNION
+SELECT fecha, hora, nombre, email, telefono, mensaje, como_te_enteraste, fecha_del_evento, hora_de_inicio, hora_de_fin FROM fiestas_infantiles
+UNION
+SELECT fecha, hora, nombre, email, telefono, mensaje, como_te_enteraste, fecha_del_evento, hora_de_inicio, hora_de_fin FROM fiestas_para_adultos;
