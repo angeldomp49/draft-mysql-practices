@@ -28,3 +28,34 @@ BEGIN
 
     SELECT * FROM resultados;
 END |
+
+DROP PROCEDURE IF EXISTS hasta;
+DELIMITER |
+CREATE PROCEDURE hasta( IN limite TINYINT )
+BEGIN
+    SET @i = 0;
+
+    bucle1: WHILE @i < limite DO
+        SELECT @i;
+        SET @i = @i + 1;
+    END WHILE;
+END |
+
+CALL hasta(11);
+
+DROP PROCEDURE IF EXISTS hasta;
+DELIMITER |
+CREATE PROCEDURE hasta( IN limite TINYINT )
+BEGIN
+    SET @i = 0;
+    CREATE TEMPORARY TABLE resultados(
+        i TINYINT
+    );
+    bucle1: WHILE @i < limite DO
+        INSERT INTO resultados VALUES( @i );
+        SET @i = @i + 1;
+    END WHILE;
+END |
+
+CALL hasta(11);
+SELECT * FROM resultados;
