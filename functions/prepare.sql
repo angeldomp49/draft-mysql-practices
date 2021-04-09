@@ -19,3 +19,12 @@ BEGIN
     PREPARE todo FROM @consulta;
     EXECUTE todo;
 END |
+
+CREATE PROCEDURE IF NOT EXISTS tab_resultados()
+BEGIN
+
+    CREATE TEMPORARY TABLE resultados
+    SELECT * FROM bolsa_de_trabajo;
+
+    SELECT * FROM resultados;
+END |
