@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS formularios;
+
+USE formularios;
+
+CREATE TABLE nombre(
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    campo1 VARCHAR(255),
+    campo2 SMALLINT
+)
+
+ENGINE = INNODB;
