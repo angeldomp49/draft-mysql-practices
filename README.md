@@ -104,3 +104,9 @@ id:                  primary key (bigint unsigned not null autoincrement)
 photography:         mediumblob
 imagable_id:         foreign key (bigint unsigned not null)
 imagable_type:       varchar(100)
+
+
+Como práctica para las vistas materializadas se van a crear de este tipo usando consultas que hagan referencia a claves foraneas,
+además se va a tratar de medir la velocidad de respuesta,
+por último se van a usar indices para ver si hay un cambio,
+además se va a incluir práctica para busquedas con indices de texto FULLTEXT
