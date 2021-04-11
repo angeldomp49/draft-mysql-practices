@@ -110,3 +110,4 @@ Como práctica para las vistas materializadas se van a crear de este tipo usando
 además se va a tratar de medir la velocidad de respuesta,
 por último se van a usar indices para ver si hay un cambio,
 además se va a incluir práctica para busquedas con indices de texto FULLTEXT
+
